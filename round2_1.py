@@ -335,4 +335,3 @@ def round2(sound):
             pygame.display.flip()
         bg_music.stop()
     pygame.quit()
-round2(0)
