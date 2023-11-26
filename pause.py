@@ -5,7 +5,7 @@ def pause():
     HEIGHT = 950  # 창 가로세로 상수로 정해두고 시작 ->이거 해상도마다 다르게 보일 수 있음
     fps = 60
     timer = pygame.time.Clock()  # 속도 제어 위해서
-    screen = pygame.display.set_mode([WIDTH, HEIGHT], pygame.FULLSCREEN)  # 창 가로세로 정하기
+    screen = pygame.display.set_mode([WIDTH, HEIGHT])  # 창 가로세로 정하기
 
     for event in pygame.event.get():  # 모든 이벤트들 리스트로 해서 event에 하나씩 for문으로 넣어줌
         if event.type == pygame.QUIT:

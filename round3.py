@@ -18,7 +18,7 @@ def round3(sound):
 
     # 초기 설정 및 이미지 로드
     WIDTH, HEIGHT = 900, 950
-    screen = pygame.display.set_mode([WIDTH, HEIGHT],pygame.FULLSCREEN) # 창의크기 설정
+    screen = pygame.display.set_mode([WIDTH, HEIGHT]) # 창의크기 설정
     pygame.display.set_caption("3round") # 제목 설정
 
     font = pygame.font.SysFont('arial', 24)

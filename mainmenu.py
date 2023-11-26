@@ -15,7 +15,7 @@ WIDTH = 900
 HEIGHT = 950 # 창 가로세로 상수로 정해두고 시작 ->이거 해상도마다 다르게 보일 수 있음
 fps = 60
 timer = pygame.time.Clock() # 속도 제어 위해서
-screen = pygame.display.set_mode([WIDTH, HEIGHT],pygame.FULLSCREEN) # 창 가로세로 정하기
+screen = pygame.display.set_mode([WIDTH, HEIGHT]) # 창 가로세로 정하기
 
 
 easter_egg1=[0, 0, 0, 0, 0, 0] # 1번 이스터 조건

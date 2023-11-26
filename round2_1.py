@@ -26,7 +26,7 @@ def round2(sound):
 
     # 2. 게임창 옵션 설정
     size = [900, 950]
-    screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(size)
 
     title = "2R"
     pygame.display.set_caption(title)
