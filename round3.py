@@ -27,6 +27,7 @@ def round3(sound):
 
     button_colors = [(255, 165, 0), (0, 191, 255), (255, 69, 0), (138, 43, 226), (128, 128, 128)] # 버튼의 색상(RGB) 지정
 
+    # 이미지 파일 불러오기
     exit_img = pygame.transform.scale(pygame.image.load(resources.images.characters.exit_path), (40, 40))
     background_image = pygame.image.load(resources.images.characters.bg_path)
     shop_image = pygame.transform.scale(pygame.image.load(resources.images.characters.shop_sign_path), (400, 150))
@@ -156,10 +157,9 @@ def round3(sound):
 
         button_heart_version = pygame.draw.rect(screen, (255, 255, 255), (550, 250, 30, 30), border_radius = 150)
         exit_button = pygame.draw.rect(screen, (0, 0, 0), (860, 910, 40, 40), border_radius = 150)
-        # restart_button = pygame.draw.rect(screen, (255, 255, 255), (820, 910, 40, 40), border_radius = 150)
         
         if insufficient_score_message:
-            current_time = time.time()
+            current_time = time.time() # 현재 시간 불러오기
             if current_time - message_start_time <= 1:  # 1초간 메시지 표시
                 insufficient_score_text = font.render("No score", True, (255, 0, 0))
                 screen.blit(insufficient_score_text, (WIDTH / 2 - insufficient_score_text.get_width() / 2, HEIGHT / 2))
