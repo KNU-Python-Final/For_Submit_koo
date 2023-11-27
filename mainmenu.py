@@ -6,7 +6,7 @@ import option
 import resources.save_files
 import resources.images.characters
 
-sound = 1
+sound = 1 #사운드 on/off 여부 -> 디폴트값 ON
 
 pygame.mixer.init() # 사운드 초기화
 pygame.init() # pygame 초기화
@@ -22,7 +22,7 @@ easter_egg1=[0, 0, 0, 0, 0, 0] # 1번 이스터 조건
 easter = 0 # 1번 이스터 상자를 떨궜는지
 easter_now = [0, 0] # 이스터 에그 발견 현황 -> 1번 이스터 상자 열기까지 했는지
 global is_earned # global : 전역변수로 사용할 것이다
-is_earned = False
+is_earned = False #이스터에그로 스코어 얻었었는지 여부
 
 save_file = resources.save_files.save_file() # 빈 save_file 생성
 save_file.load() # save_file 변수에 json 입력
@@ -60,17 +60,17 @@ def Button(img, click_img, x, y, width, height, sound , param = None, action = N
                 action(param) # 파라미터 전달
 
         elif click[0] and action != None and param == None: # 왼쪽 마우스 눌린 경우 + 이후 실행할 수 있는 함수 있는 경우 + score가 없는 경우
-            if func != None: # func 파라미터가 주어진 경우
+            if func != None: # func 파라미터가 주어진 경우 -> 버튼 옆에 삼각형 만들기 위해
                 pygame.draw.polygon(screen, (255, 255, 255), 
                                 [[x - 50, y + height // 2 - 20], [x - 50, y + height // 2 + 20],
                                  [x - 30, y + height // 2]], 5) 
                 pygame.draw.polygon(screen, 'Red', [[x - 50, y + height // 2 - 20], [x - 50, y + height // 2 + 20],
                                                 [x - 30, y + height // 2]], 5) 
             pygame.display.flip() 
-            if sound == 1:
+            if sound == 1: #사운드 on일때 버튼 소리내기
                 button_sound.play(0)
-            time.sleep(1) 
-            action(param)
+            time.sleep(1) #1초 지연하고
+            action(param) #함수 실행
         elif click[0] and action == None: # 왼쪽 마우스 눌린 경우 + 이후 실행할 함수 없는 경우 -> 아직 버튼에 함수 안 이은 상태일 때
             if func != None: # func 파라미터가 주어진 경우
                 pygame.draw.polygon(screen, (255, 255, 255), [[x - 50, y + height // 2 - 20], [x - 50, y + height // 2 + 20],
@@ -78,7 +78,7 @@ def Button(img, click_img, x, y, width, height, sound , param = None, action = N
                 pygame.draw.polygon(screen, 'Red', [[x - 50, y + height // 2 - 20], [x - 50, y + height // 2 + 20],
                                                 [x - 30, y + height // 2]], 5)
             pygame.display.flip()
-            if sound == 1:
+            if sound == 1: #소리 on일 때
                 button_sound.play(0)
     else:
         if func != None: # func 파라미터가 주어진 경우
@@ -99,14 +99,14 @@ def chain_letters(easter_now,sound): # 이스터 에그 보물상자 열 경우 
                                'red')
     screen.blit(chain_letter, (300, 450))
     global is_earned # global : 전역변수로 지정
-    if not is_earned:
+    if not is_earned: #아직 스코어 안 얻었으면
         save_file.score += 100000
         save_file.save()  # 게임 종료 시 점수 저장
         is_earned = True
 
 def quitgame(): # 게임 끄기 함수
     pygame.quit()
-    sys.exit() # ???
+    sys.exit() 
 def main_menu(WIDTH, HEIGHT, easter, easter_now, sound): 
     screen.fill('black')  # 배경 색
     pacman_logo = pygame.transform.scale(pygame.image.load(f'assets/pacman_main_menu_images/pacman_logo.png'), (600, 300))
@@ -135,6 +135,7 @@ def main_menu(WIDTH, HEIGHT, easter, easter_now, sound):
     image.append(pink_ghost)
     image.append(blue_ghost)
     image.append(orange_ghost)
+    #코인 색 지정
     light_yellow = (255, 255, 150)
 
     menu = True
@@ -146,12 +147,14 @@ def main_menu(WIDTH, HEIGHT, easter, easter_now, sound):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: # 왼쪽 마우스 클릭
                     mouse_x, mouse_y = event.pos
+                    #이스터에그 조건 -> 유령 이미지, 팩맨 이미지 누르면
                     for i in range(len(image)):
                         if WIDTH // 2 - 100 + i*50 + 45 > mouse_x > WIDTH // 2 - 100 + i*50 and 370 + 45 > mouse_y > 370 and not easter and not easter_now[0]: # ???
                             if easter_egg1[i] == 0 and sound == 1:
                                 click_easter.play(0)
-                            easter_egg1[i] = 1
+                            easter_egg1[i] = 1 #해당 이스터에그 조건 했다고 1로 바꿈
                             screen.blit(black1,(WIDTH // 2 - 100 + i*50, 370))
+                    #이스터에그 조건 -> 코인 이미지 누르면
                     if WIDTH // 2 - 125 + 10 > mouse_x > WIDTH // 2 - 125 - 10 and 405 > mouse_y > 385 and not easter and not easter_now[0]:
                         if easter_egg1[5] == 0 and sound == 1:
                             click_easter.play(0)
