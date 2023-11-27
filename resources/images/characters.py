@@ -153,7 +153,7 @@ return_sign_str = 'return_sign'
 
 
 
-def get_image_path(name: str) -> str:
+def get_image_path(name: str) -> str: # str로 받는 이유 : 오타났을 때 억장이 무너지기 때문에
     if name == default_str:
         return default_1_path
     elif name == king_str:

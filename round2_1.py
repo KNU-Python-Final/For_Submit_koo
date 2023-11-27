@@ -17,7 +17,7 @@ def round2(sound):
         bg_music.play(-1) # 반복 재생
 
     save_file = resources.save_files.save_file()
-    save_file.load()
+    save_file.load() # 세이브파일 로드하기
     coin_list = []
     last_bullet_time = 0
     bullet_cooldown = 500  # 500ms = 0.5초
@@ -70,7 +70,7 @@ def round2(sound):
     .sx = 가로 크기,.sy = 세로 크기
     '''
 
-    # 히트박스
+    # 히트박스(원형)
     def circle_crash(obj1, obj2):
         center1 = (obj1.x + obj1.sx / 2, obj1.y + obj1.sy / 2)
         center2 = (obj2.x + obj2.sx / 2, obj2.y + obj2.sy / 2)
@@ -86,13 +86,13 @@ def round2(sound):
 
     pacman_images = []
     for image_path in resources.images.characters.get_images_path(save_file.image_file):
-        pacman_images.append(pygame.transform.scale(pygame.image.load(image_path), (50, 50)))
+        pacman_images.append(pygame.transform.scale(pygame.image.load(image_path), (50, 50))) # 이미지 파일을 50x50으로 로드
 
     ss.put_image(resources.images.characters.default_1_path) # 시작 이미지 설정
     ss.change_size(50, 50) # 이미지 크기 조정
 
-    ss.x = round(size[0] / 2 - ss.sx / 2)
-    ss.y = size[1] - ss.sy - 15
+    ss.x = round(size[0] / 2 - ss.sx / 2) # 플레이어의 x좌표
+    ss.y = size[1] - ss.sy - 15 # 플레이어의 y좌표
     ss.move = 17 # 속도
 
     left_go = False
@@ -113,8 +113,8 @@ def round2(sound):
     # 4-0. 게임 시작 대기화면
     is_stopped = False  # Start/Stop Boolean
     while not is_stopped:
-        clock.tick(60)
-        if startup_counter < 180:
+        clock.tick(60) # 60fps
+        if startup_counter < 180: # 3초
             font = pygame.font.Font("assets/pacman_main_menu_images/emulogic.ttf", 50)
             screen.fill('black')
             ready_text = font.render(f'GET READY {3-startup_counter//60}', True, 'yellow')  # antialias : True -> 선 부드럽게..
@@ -126,7 +126,7 @@ def round2(sound):
 
 
     # 4. 메인 이벤트
-    start_time = datetime.now()
+    start_time = datetime.now() # 현재 시간을 얻어서 경과 시간을 확인
     is_stopped = False
     while not is_stopped:
 
@@ -138,36 +138,35 @@ def round2(sound):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_stopped = True
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    left_go = True
+            if event.type == pygame.KEYDOWN: # 눌렀을 때
+                if event.key == pygame.K_LEFT: # 왼쪽 화살표를
+                    left_go = True # 왼쪽으로 이동
                 elif event.key == pygame.K_RIGHT:
                     right_go = True
                 elif event.key == pygame.K_SPACE:
                     space_go = True
                     k = 0
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    left_go = False
+            elif event.type == pygame.KEYUP: # 뗐을 때
+                if event.key == pygame.K_LEFT: # 왼쪽 화살표를
+                    left_go = False # 왼쪽으로 이동 그만
                 elif event.key == pygame.K_RIGHT:
                     right_go = False
                 elif event.key == pygame.K_SPACE:
                     space_go = False
         current_image_index = k // 10 % len(pacman_images) # 10프레임마다 이미지 변경
         ss.img = pacman_images[current_image_index] # 현재 이미지 업데이트
-        ss.img = pygame.transform.rotate(ss.img, 90)
+        ss.img = pygame.transform.rotate(ss.img, 90) # 현재 이미지 90도 돌리기
 
         # 4-3. 입력, 시간에 따른 변화
-        now_time = datetime.now()
-        delta_time = round((now_time - start_time).total_seconds())
+        now_time = datetime.now() # 현재 시간 얻기
+        delta_time = round((now_time - start_time).total_seconds()) # 게임 경과 시간
 
-        if delta_time > 20:
+        if delta_time > 20: # 게임 시간은 20초
             is_stopped = True
             is_gameovered = True
-            TO = 1
 
         if left_go == True:
-            ss.x = ss.x - ss.move
+            ss.x = ss.x - ss.move # 플레이어의 x좌표 이동
             # player가 왼쪽 밖으로 나가지 않도록 조정
             if ss.x < 0:
                 ss.x = 0
@@ -176,7 +175,7 @@ def round2(sound):
             # player가 오른쪽 밖으로 나가지 않도록 조정
             if ss.x >= size[0] - ss.sx:
                 ss.x = size[0] - ss.sx
-        if space_go == True and save_file.score >= 10 and current_time - last_bullet_time > bullet_cooldown: # 총알 속도 고정
+        if space_go == True and save_file.score >= 10 and current_time - last_bullet_time > bullet_cooldown: # 총알 공격속도 지정
             last_bullet_time = current_time # 마지막 총알 발사 시간 업데이트
             # mm = 총알
             mm = obj()
@@ -184,7 +183,7 @@ def round2(sound):
             mm.change_size(5, 15)
             mm.x = round(ss.x + ss.sx / 2 - mm.sx / 2) # 총알의 히트박스
             mm.y = ss.y - mm.sy - 10 # player의 주둥이보다 조금 더 앞에서 총알이 나가도록 조정
-            mm.move = 20
+            mm.move = 20 # 총알의 이동속도
             bullet_list.append(mm)
             save_file.score -= 10 # score 차감
         '''
@@ -197,11 +196,11 @@ def round2(sound):
         d_list = [] # delete list
         for i in range(len(bullet_list)):
             m = bullet_list[i]
-            m.y = m.y - m.move
-            if m.y <= - m.sy:
+            m.y = m.y - m.move # 총알을 위로 이동
+            if m.y <= - m.sy: # 총알이 특정 지점에 도달한다면
                 d_list.append(i)
         for d in d_list:
-            del bullet_list[d]
+            del bullet_list[d] # 총알 삭제
 
         if random.random() > 0.85: # 15% 확률 (0 ~ 1)
             aa = obj()
@@ -211,6 +210,7 @@ def round2(sound):
             aa.change_size(40, 40)
             aa.x = random.randrange(0, size[0] - aa.sx - round(ss.sx / 2)) # 유령 x좌표
             aa.y = 10 # 유령 y좌표
+            # 유령마다 떨어지는 속도 다르게
             if ghost_image == 0:
                 aa.move = 22
             elif ghost_image == 1:
@@ -231,7 +231,7 @@ def round2(sound):
             coin.move = 8 # 코인의 이동 속도
             coin_list.append(coin)
 
-        # 코인 이동
+        # 코인 삭제 로직
         coin_delete_list = []
         for i in range(len(coin_list)):
             c = coin_list[i]
