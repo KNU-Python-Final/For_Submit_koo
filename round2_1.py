@@ -240,7 +240,7 @@ def round2(sound):
                 coin_delete_list.append(i)
 
         # 코인과 우주선의 충돌 감지
-        for coin in coin_list[:]:
+        for coin in coin_list[:]: # coin_list 순회
             if circle_crash(coin, ss):
                 coin_list.remove(coin) # 코인 제거
                 save_file.score += 10  # 플레이어 점수 증가
@@ -268,8 +268,8 @@ def round2(sound):
                 m = bullet_list[i]
                 a = ghost_list[j]
                 if circle_crash(m, a) == True: # 총알과 유령이 부딪혔다면
-                    dm_list.append(i)
-                    da_list.append(j)
+                    dm_list.append(i) # 총알 삭제 로직
+                    da_list.append(j) # 유령 삭제 로직
         dm_list = list(set(dm_list))
         da_list = list(set(da_list))
 
@@ -323,7 +323,7 @@ def round2(sound):
         screen.blit(text, (160, round(size[1] / 2 - 30)))
         text = font.render(f"Final Coin  : {save_file.score}", True, 'white')
         screen.blit(text, (100, round(size[1] / 2 + 70)))
-        if end_counter < 60*8:
+        if end_counter < 60*8: # 8초
             font = pygame.font.Font("assets/pacman_main_menu_images/neodgm.ttf", 25)
             pygame.draw.rect(screen, 'black', [540,round(size[1] / 2 + 200) , 25, 25], 13)
             text = font.render(f"상점까지 남은 시간 앞으로 {7-end_counter//60}초..", True, 'white') #7~0까지 나오게
