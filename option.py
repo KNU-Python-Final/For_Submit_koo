@@ -1,9 +1,15 @@
 import pygame
+import ctypes
+
+u32 = ctypes.windll.user32
+resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
 
 import time
 WIDTH = 900
 HEIGHT = 950  # 창 가로세로 상수로 정해두고 시작 ->이거 해상도마다 다르게 보일 수 있음
-screen = pygame.display.set_mode([WIDTH, HEIGHT],pygame.FULLSCREEN) #창 가로세로 정하기
+#screen = pygame.display.set_mode([WIDTH, HEIGHT],pygame.FULLSCREEN) #창 가로세로 정하기
+screen = pygame.display.set_mode(resolution,pygame.FULLSCREEN)
+
 timer = pygame.time.Clock()  # 속도 제어 위해서
 fps = 60  # 게임 플레이할 수 있는 최대속도
 # 옵션 이미지 가져오기
@@ -39,12 +45,11 @@ unclicked_sound.append(yes)
 maze_index = 0
 sound = 1
 maze_color = green
-def Button(img, click_img, x, y, width, height, a,b,c,d,e, action = None):
+def Button(img, click_img, x, y, width, height, a,b,c, action = None):
     import pygame
     import time
 
-    WIDTH = 900
-    HEIGHT = 950  # 창 가로세로 상수로 정해두고 시작 ->이거 해상도마다 다르게 보일 수 있음
+
     button_sound = pygame.mixer.Sound("assets/sounds/button.wav")
     button_sound.set_volume(0.5)
     mouse = pygame.mouse.get_pos()
@@ -55,7 +60,7 @@ def Button(img, click_img, x, y, width, height, a,b,c,d,e, action = None):
             screen.blit(click_img, (x, y))
             button_sound.play(0)
             time.sleep(1) #1초 지연
-            action(a,b,c,d,e)
+            action(a,b,c)
         elif click[0] and action == None: #왼쪽 마우스 눌린 경우 + 이후 실행할 함수 없는 경우 -> 아직 버튼에 함수 안 이은 상태일 때
             button_sound.play(0)
             screen.blit(click_img,(x,y))
@@ -73,17 +78,17 @@ def sound_button(img, click_img,x,y, width, height):
     click = pygame.mouse.get_pressed()  # 클릭시
 
 
-    screen.blit(clicked_sound[sound], (WIDTH // 2 - 400 // 2+sound*300, 400))  # 현재 선택되어있는 색 체크중
+    screen.blit(clicked_sound[sound], (resolution[0] // 2 - 400 // 2+sound*300, 400))  # 현재 선택되어있는 색 체크중
     if x + width > mouse[0] > x and y + height > mouse[1] > y:
         # screen.blit(click_img,(x,y))
         if click[0] and img==yes:  # 현재 색상 아닌 색 선택
-            screen.blit(unclicked_sound[0], (WIDTH // 2 - 400 // 2+0*300, 400))
+            screen.blit(unclicked_sound[0], (resolution[0] // 2 - 400 // 2+0*300, 400))
             screen.blit(click_img, (x, y))
             if sound != 1:
                 sound_button.play(0)
             return 1
         if click[0] and img == no:  # 지금 누르는 색이 원래 결정되었던 색인 경우
-            screen.blit(unclicked_sound[1], (WIDTH // 2 - 400 // 2+1*300, 400))
+            screen.blit(unclicked_sound[1], (resolution[0] // 2 - 400 // 2+1*300, 400))
             screen.blit(click_img, (x, y))
             if sound != 0:
                 sound_button.play(0)
@@ -119,13 +124,13 @@ def color(img, click_img, x, y, width, height): #color_index : 그 직전 결정
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed() # 클릭시
 
-    screen.blit(clicked_colors[maze_index], (WIDTH // 2 - 620 // 2+maze_index*170, 650)) #현재 선택되어있는 색 체크중
+    screen.blit(clicked_colors[maze_index], (resolution[0] // 2 - 620 // 2+maze_index*170, 650)) #현재 선택되어있는 색 체크중
     if maze_index == 0: # 초록색은 위에 베스트 표시 있어야해서..
-        screen.blit(best, (WIDTH // 2 - 685 // 2, 610))
+        screen.blit(best, (resolution[0] // 2 - 685 // 2, 610))
     if x + width > mouse[0] > x and y + height > mouse[1] > y:
         # screen.blit(click_img,(x,y))
         if click[0] and maze_color!=img: # 현재 색상 아닌 색 선택
-            screen.blit(colors[maze_index], (WIDTH // 2 - 620 // 2+maze_index*170, 650))
+            screen.blit(colors[maze_index], (resolution[0] // 2 - 620 // 2+maze_index*170, 650))
             screen.blit(click_img, (x, y))
             color_button_sound.play(0)
             return img
@@ -144,23 +149,23 @@ def options(l):
         for event in pygame.event.get():  # 모든 이벤트들 리스트로 해서 event에 하나씩 for문으로 넣어줌
             if event.type == pygame.QUIT:
                 mainmenu.quitgame()
-        screen.blit(setting,(WIDTH//2-709//2,30)) # option 밑그림
+        screen.blit(setting,(resolution[0]//2-709//2,30)) # option 밑그림
         for i in range(4): #색 체크칸
-            screen.blit(colors[i], (WIDTH // 2 - 620 // 2+i*170, 650))
-        screen.blit(best, (WIDTH // 2 - 685 // 2, 610))
+            screen.blit(colors[i], (resolution[0] // 2 - 620 // 2+i*170, 650))
+        screen.blit(best, (resolution[0] // 2 - 685 // 2, 610))
 
         for i in range(2): #사운드 칸
-            screen.blit(unclicked_sound[i], (WIDTH // 2 - 400 // 2+i*300, 400))
+            screen.blit(unclicked_sound[i], (resolution[0] // 2 - 400 // 2+i*300, 400))
 
-        Button(save, clicked_save, WIDTH // 2 - 201//2, 800, 201,98, WIDTH, HEIGHT, easter,easter_now,sound,action=mainmenu.main_menu)
+        Button(save, clicked_save, resolution[0] // 2 - 201//2, 800, 201,98, easter,easter_now,sound,action=mainmenu.main_menu)
 
-        sound = sound_button(yes, clicked_yes,WIDTH // 2 - 400 // 2+1*300, 400,100,100) # 사운드 O
-        sound = sound_button(no, clicked_no, WIDTH // 2 - 400 // 2+0*300, 400,100,100) # 사운드 X
+        sound = sound_button(yes, clicked_yes,resolution[0] // 2 - 400 // 2+1*300, 400,100,100) # 사운드 O
+        sound = sound_button(no, clicked_no, resolution[0] // 2 - 400 // 2+0*300, 400,100,100) # 사운드 X
 
-        maze_color = color(green, clicked_green, WIDTH // 2 - 620 // 2 + 0 * 170, 650, 100, 100)
-        maze_color = color(blue, clicked_blue, WIDTH // 2 - 620 // 2+1*170, 650, 100, 100)
-        maze_color = color(pink, clicked_pink, WIDTH // 2 - 620 // 2 + 2 * 170, 650, 100, 100)
-        maze_color = color(yellow, clicked_yellow, WIDTH // 2 - 620 // 2 + 3 * 170, 650, 100, 100)
+        maze_color = color(green, clicked_green, resolution[0] // 2 - 620 // 2 + 0 * 170, 650, 100, 100)
+        maze_color = color(blue, clicked_blue, resolution[0] // 2 - 620 // 2+1*170, 650, 100, 100)
+        maze_color = color(pink, clicked_pink, resolution[0] // 2 - 620 // 2 + 2 * 170, 650, 100, 100)
+        maze_color = color(yellow, clicked_yellow, resolution[0] // 2 - 620 // 2 + 3 * 170, 650, 100, 100)
 
 
         timer.tick(fps)

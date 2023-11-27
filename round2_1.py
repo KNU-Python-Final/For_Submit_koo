@@ -5,6 +5,10 @@ from datetime import datetime
 import round3
 import resources.save_files
 import resources.images.characters
+import ctypes
+
+u32 = ctypes.windll.user32
+resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
 
 def round2(sound):
     # 1. 게임 초기화
@@ -25,8 +29,9 @@ def round2(sound):
     startup_counter = 0 # 3초 후 시작하기 위해
 
     # 2. 게임창 옵션 설정
-    size = [900, 950]
-    screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
+    #size = [900, 950]
+    #screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
 
     title = "2R"
     pygame.display.set_caption(title)
@@ -91,8 +96,8 @@ def round2(sound):
     ss.put_image(resources.images.characters.default_1_path) # 시작 이미지 설정
     ss.change_size(50, 50) # 이미지 크기 조정
 
-    ss.x = round(size[0] / 2 - ss.sx / 2)
-    ss.y = size[1] - ss.sy - 15
+    ss.x = round(resolution[0] / 2 - ss.sx / 2)
+    ss.y = resolution[1] - ss.sy - 15
     ss.move = 17 # 속도
 
     left_go = False
@@ -118,7 +123,7 @@ def round2(sound):
             font = pygame.font.Font("assets/pacman_main_menu_images/emulogic.ttf", 50)
             screen.fill('black')
             ready_text = font.render(f'GET READY {3-startup_counter//60}', True, 'yellow')  # antialias : True -> 선 부드럽게..
-            screen.blit(ready_text, (190, 450))
+            screen.blit(ready_text, (resolution[0]//2-320, 410))
             startup_counter += 1
             pygame.display.flip()
         else:
@@ -174,8 +179,8 @@ def round2(sound):
         elif right_go == True:
             ss.x = ss.x + ss.move
             # player가 오른쪽 밖으로 나가지 않도록 조정
-            if ss.x >= size[0] - ss.sx:
-                ss.x = size[0] - ss.sx
+            if ss.x >= resolution[0] - ss.sx:
+                ss.x = resolution[0] - ss.sx
         if space_go == True and save_file.score >= 10 and current_time - last_bullet_time > bullet_cooldown: # 총알 속도 고정
             last_bullet_time = current_time # 마지막 총알 발사 시간 업데이트
             # mm = 총알
@@ -209,7 +214,7 @@ def round2(sound):
             ghost_image = random.randrange(0, 4)
             aa.put_image(ghost_images[ghost_image]) # 이미지를 반복하여 생성
             aa.change_size(40, 40)
-            aa.x = random.randrange(0, size[0] - aa.sx - round(ss.sx / 2)) # 유령 x좌표
+            aa.x = random.randrange(0, resolution[0] - aa.sx - round(ss.sx / 2)) # 유령 x좌표
             aa.y = 10 # 유령 y좌표
             if ghost_image == 0:
                 aa.move = 22
@@ -226,7 +231,7 @@ def round2(sound):
             coin = obj()
             coin.put_image("assets/2round_images/coin.png")
             coin.change_size(20, 20) # 코인의 크기 설정
-            coin.x = random.randrange(0, size[0] - coin.sx)
+            coin.x = random.randrange(0, resolution[0] - coin.sx)
             coin.y = 10 # 코인의 초기 위치
             coin.move = 8 # 코인의 이동 속도
             coin_list.append(coin)
@@ -236,7 +241,7 @@ def round2(sound):
         for i in range(len(coin_list)):
             c = coin_list[i]
             c.y = c.y + c.move # 코인을 아래로 이동
-            if c.y >= size[1]:
+            if c.y >= resolution[1]:
                 coin_delete_list.append(i)
 
         # 코인과 우주선의 충돌 감지
@@ -253,7 +258,7 @@ def round2(sound):
         for i in range(len(ghost_list)):
             a = ghost_list[i]
             a.y = a.y + a.move # 유령을 아래로 이동
-            if a.y >= size[1]:
+            if a.y >= resolution[1]:
                 d_list.append(i)
         d_list.reverse()
         for d in d_list:
@@ -300,10 +305,10 @@ def round2(sound):
         screen.blit(text_kill, (10, 5))
 
         text_time = font.render("time : {}".format(delta_time), True, (255, 255, 255))
-        screen.blit(text_time, (size[0] - 100, 5))
+        screen.blit(text_time, (resolution[0] - 100, 5))
 
         text_score = font.render("score : {}".format(save_file.score), True, (255, 255, 255))
-        screen.blit(text_score, (size[0] - 250, 5))
+        screen.blit(text_score, (resolution[0] - 250, 5))
 
         # 4-5. 업데이트
         pygame.display.flip()
@@ -318,16 +323,16 @@ def round2(sound):
                 is_gameovered = 0
         font = pygame.font.Font("assets/pacman_main_menu_images/emulogic.ttf", 35)
         text = font.render(f"Final Score : {save_file.score}", True, 'white')
-        screen.blit(text, (100, round(size[1] / 2 - 130)))
+        screen.blit(text, (resolution[0]//2-370, round(resolution[1] / 2 - 130)))
         text = font.render(f"SCORE -> COIN", True, 'yellow')
-        screen.blit(text, (160, round(size[1] / 2 - 30)))
+        screen.blit(text, (resolution[0]//2-270, round(resolution[1] / 2 - 30)))
         text = font.render(f"Final Coin  : {save_file.score}", True, 'white')
-        screen.blit(text, (100, round(size[1] / 2 + 70)))
+        screen.blit(text, (resolution[0]//2-370, round(resolution[1] / 2 + 70)))
         if end_counter < 60*8:
             font = pygame.font.Font("assets/pacman_main_menu_images/neodgm.ttf", 25)
-            pygame.draw.rect(screen, 'black', [540,round(size[1] / 2 + 200) , 25, 25], 13)
+            pygame.draw.rect(screen, 'black', [resolution[0]//2+50,round(resolution[1] / 2 + 200) , 25, 25], 13) #전의 숫자 지워지게
             text = font.render(f"상점까지 남은 시간 앞으로 {7-end_counter//60}초..", True, 'white') #7~0까지 나오게
-            screen.blit(text, (220, round(size[1] / 2 + 200)))
+            screen.blit(text, (resolution[0]//2-270, round(resolution[1] / 2 + 200)))
             end_counter += 1
             pygame.display.flip()
         else:
@@ -335,4 +340,4 @@ def round2(sound):
             pygame.display.flip()
         bg_music.stop()
     pygame.quit()
-round2(0)
+#round2(0)

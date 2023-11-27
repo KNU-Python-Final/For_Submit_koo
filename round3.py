@@ -5,7 +5,10 @@ import resources.save_files
 import mainmenu
 from mainmenu import easter
 from mainmenu import easter_now
+import ctypes
 
+u32 = ctypes.windll.user32
+resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
 
 def round3(sound):
     pygame.init()
@@ -18,7 +21,8 @@ def round3(sound):
 
     # 초기 설정 및 이미지 로드
     WIDTH, HEIGHT = 900, 950
-    screen = pygame.display.set_mode([WIDTH, HEIGHT],pygame.FULLSCREEN) # 창의크기 설정
+    #screen = pygame.display.set_mode([WIDTH, HEIGHT],pygame.FULLSCREEN) # 창의크기 설정
+    screen = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
     pygame.display.set_caption("3round") # 제목 설정
 
     font = pygame.font.SysFont('arial', 24)
@@ -121,7 +125,7 @@ def round3(sound):
 
                 elif restart_button.collidepoint(mouse_pos):
                     time.sleep(1)
-                    mainmenu.main_menu(WIDTH, HEIGHT, easter, easter_now, sound)
+                    mainmenu.main_menu(easter, easter_now, sound)
                 elif exit_button.collidepoint(mouse_pos):
                     run = False
 
