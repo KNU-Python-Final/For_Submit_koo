@@ -1,0 +1,15 @@
+{
+  "score": 10,
+  "image_file": "default",
+  "inventory": {
+    "default": true,
+    "king": false,
+    "heart_king": false,
+    "leaf": false,
+    "heart_leaf": false,
+    "angel": false,
+    "heart_angel": false,
+    "santa": false,
+    "heart_santa": false
+  }
+}
