@@ -200,6 +200,7 @@ def main_menu(WIDTH, HEIGHT, easter, easter_now, sound):
         font = pygame.font.Font("assets/pacman_main_menu_images/emulogic.ttf", 30)
         screen.blit(name_text, (150, 0))
 
+        #버튼 함수
         startButton = Button(start_img, click_start_img, WIDTH // 2-208//2, 450+100, 208,50, sound, save_file.score, pacman_2.pacman, main_menu)
         opionButton = Button(options_img, click_options_img, WIDTH // 2 - 225 // 2, 450+200, 230, 65,sound,[easter,easter_now], action = option.options,func = main_menu)
         exitbutton = Button(exit_img, click_exit_img, WIDTH // 2 - 160 // 2, 450+330, 160, 52, sound,None, quitgame,func = main_menu)
