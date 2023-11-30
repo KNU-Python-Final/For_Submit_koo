@@ -1093,7 +1093,7 @@ def pacman():
             if flicker_gameover_won % 60 >= 5:
                 press_enter_to_continue_text = font.render(f'press [SPACE] to continue', True,
                                                            'white')  # antialias : True -> 선 부드럽게..
-                screen.blit(press_enter_to_continue_text, (180 + 350, 350))
+                screen.blit(press_enter_to_continue_text, (230 + 350, 500))
 
         if powerup: # 파워업 먹었으면
             pygame.draw.circle(screen, 'blue', (162, 46), 10)
