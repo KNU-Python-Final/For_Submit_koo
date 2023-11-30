@@ -5,10 +5,17 @@ from datetime import datetime
 import round3
 import resources.save_files
 import resources.images.characters
-import ctypes
+import platform
 
-u32 = ctypes.windll.user32
-resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+os_name = platform.system()
+
+if os_name == "Windows":
+    import ctypes
+
+    u32 = ctypes.windll.user32
+    resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+else:
+    resolution = [900, 950]
 
 def round2(sound):
     # 1. 게임 초기화

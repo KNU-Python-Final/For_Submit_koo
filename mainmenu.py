@@ -5,10 +5,17 @@ import pacman_2
 import option
 import resources.save_files
 import resources.images.characters
-import ctypes
+import platform
 
-u32 = ctypes.windll.user32
-resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+os_name = platform.system()
+
+if os_name == "Windows":
+    import ctypes
+
+    u32 = ctypes.windll.user32
+    resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+else:
+    resolution = [900,950]
 
 sound = 1
 

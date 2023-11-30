@@ -10,10 +10,18 @@ def pacman():
     import resources.images.characters
     from option import maze_index
     from option import sound # sound 설정에서 받고 들리게 설정했으면(1) -> 소리 들리게 if문 처리...
-    import ctypes
+    import platform
 
-    u32 = ctypes.windll.user32
-    resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+    os_name = platform.system()
+
+    if os_name == "Windows":
+        import ctypes
+
+        u32 = ctypes.windll.user32
+        resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+    else:
+        resolution = [900, 950]
+
     save_file = resources.save_files.save_file()
     save_file.load()
     if maze_index == 0:
@@ -272,31 +280,31 @@ def pacman():
                     else:
                         self.x_pos += self.speed
             elif self.direction == 1: # 왼쪽 가지만
-                if self.target[1] > self.y_pos and self.turns[3]: #밑으로 갈 수 있으면
+                if self.target[1] > self.y_pos and self.turns[3]: #타겟이 밑에 있고 밑으로 갈 수 있으면
                     self.direction = 3 # 걍 밑으로 ㄱㄱ
-                elif self.target[0] < self.x_pos and self.turns[1]:
-                    self.x_pos -= self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:#타겟이 왼쪽에 있고 왼쪽으로 갈 수 있으면
+                    self.x_pos -= self.speed #왼쪽으로
                 elif not self.turns[1]: # 왼쪽에 뭐 있음. 못감 -> 다른 길 찾아야지
-                    if self.target[1] > self.y_pos and self.turns[3]: #밑으로 가는 거 가능?
+                    if self.target[1] > self.y_pos and self.turns[3]: #타겟이 밑에 있고 밑으로 갈 수 있으면
                         self.direction = 3 # 밑으로 가자
                         self.y_pos += self.speed # 픽셀만큼
-                    elif self.target[1] < self.y_pos and self.turns[2]:
+                    elif self.target[1] < self.y_pos and self.turns[2]:#타겟이 위에 있고 위로 갈 수 있으면
                         self.direction = 2
                         self.y_pos -= self.speed
-                    elif self.target[0] > self.x_pos and self.turns[0]:
+                    elif self.target[0] > self.x_pos and self.turns[0]:#타겟이 오른쪽에 있고 오른쪽으로 갈 수 있으면
                         self.direction = 0
                         self.x_pos += self.speed
-                    elif self.turns[3]:
+                    elif self.turns[3]: #차선책 -> 타겟이랑 멀어지지만 아래 갈 수 있으면
                         self.direction = 3
                         self.y_pos += self.speed
-                    elif self.turns[2]:
+                    elif self.turns[2]:#차선책 -> 타겟이랑 멀어지지만 위 갈 수 있으면
                         self.direction = 2
                         self.y_pos -= self.speed
-                    elif self.turns[0]:
+                    elif self.turns[0]:#차선책 -> 타겟이랑 멀어지지만 오른쪽 갈 수 있으면
                         self.direction = 0
                         self.x_pos += self.speed
-                elif self.turns[1]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
+                elif self.turns[1]:#왼쪽으로 가는 거 가능
+                    if self.target[1] > self.y_pos and self.turns[3]: #
                         self.direction = 3
                         self.y_pos += self.speed
                     if self.target[1] < self.y_pos and self.turns[2]:
@@ -618,10 +626,10 @@ def pacman():
             2. 충돌시 위, 아래로만 회전
             '''
             if self.direction == 0:
-                if self.target[0] > self.x_pos and self.turns[0]:
+                if self.target[0] > self.x_pos and self.turns[0]: #목표 x좌표 오른쪽 + 오른쪽 이동 가능
                     self.x_pos += self.speed
-                elif not self.turns[0]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
+                elif not self.turns[0]:#목표 x좌표 오른쪽 + 오른쪽 이동 불가능
+                    if self.target[1] > self.y_pos and self.turns[3]: #목표 y좌표 아래 + 아래 이동 가능
                         self.direction = 3
                         self.y_pos += self.speed
                     elif self.target[1] < self.y_pos and self.turns[2]:
@@ -1093,7 +1101,7 @@ def pacman():
             if flicker_gameover_won % 60 >= 5:
                 press_enter_to_continue_text = font.render(f'press [SPACE] to continue', True,
                                                            'white')  # antialias : True -> 선 부드럽게..
-                screen.blit(press_enter_to_continue_text, (180 + 350, 350))
+                screen.blit(press_enter_to_continue_text, (230 + 350, 500))
 
         if powerup: # 파워업 먹었으면
             pygame.draw.circle(screen, 'blue', (162, 46), 10)

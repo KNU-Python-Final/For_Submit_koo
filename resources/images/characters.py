@@ -148,30 +148,30 @@ santa_sign_str = 'santa_sign'
 shop_sign_path = './assets/3round_images/etc/shop_sign.png'
 shop_sign_str = 'shop_sign'
 
-return_sign_path = './assets/3round_images/etc/return.png'
+return_sign_path = './assets/3round_images/images/home.png'
 return_sign_str = 'return_sign'
 
 
 
 def get_image_path(name: str) -> str:
     if name == default_str:
-        return default_1_path
+        return default_2_path
     elif name == king_str:
-        return king_1_path
+        return king_2_path
     elif name == heart_king_str:
-        return heart_king_1_path
+        return heart_king_2_path
     elif name == leaf_str:
-        return leaf_1_path
+        return leaf_2_path
     elif name == heart_leaf_str:
-        return heart_leaf_1_path
+        return heart_leaf_2_path
     elif name == angel_str:
-        return angel_1_path
+        return angel_2_path
     elif name == heart_angel_str:
-        return heart_angel_1_path
+        return heart_angel_2_path
     elif name == santa_str:
-        return santa_1_path
+        return santa_2_path
     elif name == heart_santa_str:
-        return heart_santa_1_path
+        return heart_santa_2_path
     
     elif name == angel_sign_str:
         return angel_sign_path
