@@ -15,7 +15,7 @@ if os_name == "Windows":
     u32 = ctypes.windll.user32
     resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
 else:
-    resolution = [900, 950]
+    resolution = [1600, 1000]
 
 def round2(sound):
     # 1. 게임 초기화
