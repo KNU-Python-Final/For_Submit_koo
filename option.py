@@ -12,6 +12,9 @@ else:
     resolution = [1600, 1000]
 
 import time
+WIDTH = 900
+HEIGHT = 950  # 창 가로세로 상수로 정해두고 시작 ->이거 해상도마다 다르게 보일 수 있음
+#screen = pygame.display.set_mode([WIDTH, HEIGHT],pygame.FULLSCREEN) #창 가로세로 정하기
 screen = pygame.display.set_mode(resolution,pygame.FULLSCREEN)
 
 timer = pygame.time.Clock()  # 속도 제어 위해서
