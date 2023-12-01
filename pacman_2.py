@@ -248,38 +248,38 @@ def pacman():
             self.target[1] : 유령의 목표 y좌표
             self.turns : 유령의 회전 가능성
             '''
-            if self.direction == 0:
+            if self.direction == 0: #오른쪽 가려고 함
                 if self.target[0] > self.x_pos and self.turns[0]: # 타겟은 (x,y)쌍 -> 내 목표 x좌표 > 내 x좌표  and 오른쪽 갈 수 있으면
                     self.x_pos += self.speed
                 elif not self.turns[0]: # 오른쪽 못 감 오른쪽에 뭐 있음.
-                    if self.target[1] > self.y_pos and self.turns[3]: # 아래로 내려가는 거 가능? 타겟 y좌표 더 큼?
-                        self.direction = 3 # 내려가는 거 가능
+                    if self.target[1] > self.y_pos and self.turns[3]: # 아래로 내려가는 거 가능 + 타겟 y좌표 더 작음
+                        self.direction = 3 # 내려가자
                         self.y_pos += self.speed # 픽셀 이만큼 이동
-                    elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
+                    elif self.target[1] < self.y_pos and self.turns[2]:# 위로 내려가는 거 가능 + 타겟 y좌표 더 작음
+                        self.direction = 2 #위로 가자
+                        self.y_pos -= self.speed # 위로 속도 픽셀만큼
                     elif self.target[0] < self.x_pos and self.turns[1]: # 내 목표 x좌표 < 내 x 좌표 and 왼쪽 갈 수 있음
-                        self.direction = 1 # 왼쪽 가는거 가능
-                        self.x_pos -= self.speed
-                    elif self.turns[3]:
-                        self.direction = 3 # 밑으로 ㄱㄱ
+                        self.direction = 1 # 왼쪽 가자
+                        self.x_pos -= self.speed # 왼쪽으로 속도 픽셀만큼
+                    elif self.turns[3]: #아래 가능
+                        self.direction = 3 # 아래로 속도 픽셀만큼
                         self.y_pos += self.speed
-                    elif self.turns[2]:
-                        self.direction = 2
+                    elif self.turns[2]: #위 가능
+                        self.direction = 2 #위 가자
                         self.y_pos -= self.speed
-                    elif self.turns[1]:
-                        self.direction = 1
+                    elif self.turns[1]: #왼쪽 가능
+                        self.direction = 1 #왼쪽 가자
                         self.x_pos -= self.speed
                 elif self.turns[0]: # 오른쪽 가는 거 가능. 장애물 없음
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
+                    if self.target[1] > self.y_pos and self.turns[3]: #타켓 y좌표 아래 + 아래 가능
+                        self.direction = 3 # 아래 가자
                         self.y_pos += self.speed
-                    if self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
+                    if self.target[1] < self.y_pos and self.turns[2]: #타켓 y좌표 위 + 위 가능
+                        self.direction = 2 #위 가자
                         self.y_pos -= self.speed
                     else:
                         self.x_pos += self.speed
-            elif self.direction == 1: # 왼쪽 가지만
+            elif self.direction == 1: # 왼쪽 가려고 하고
                 if self.target[1] > self.y_pos and self.turns[3]: #타겟이 밑에 있고 밑으로 갈 수 있으면
                     self.direction = 3 # 걍 밑으로 ㄱㄱ
                 elif self.target[0] < self.x_pos and self.turns[1]:#타겟이 왼쪽에 있고 왼쪽으로 갈 수 있으면
@@ -289,58 +289,59 @@ def pacman():
                         self.direction = 3 # 밑으로 가자
                         self.y_pos += self.speed # 픽셀만큼
                     elif self.target[1] < self.y_pos and self.turns[2]:#타겟이 위에 있고 위로 갈 수 있으면
-                        self.direction = 2
-                        self.y_pos -= self.speed
+                        self.direction = 2 # 위로 가자
+                        self.y_pos -= self.speed #픽셀만큼
                     elif self.target[0] > self.x_pos and self.turns[0]:#타겟이 오른쪽에 있고 오른쪽으로 갈 수 있으면
-                        self.direction = 0
+                        self.direction = 0 #오른쪽으로 가자
                         self.x_pos += self.speed
                     elif self.turns[3]: #차선책 -> 타겟이랑 멀어지지만 아래 갈 수 있으면
-                        self.direction = 3
+                        self.direction = 3 # 아래가자
                         self.y_pos += self.speed
                     elif self.turns[2]:#차선책 -> 타겟이랑 멀어지지만 위 갈 수 있으면
-                        self.direction = 2
+                        self.direction = 2 #위 가자
                         self.y_pos -= self.speed
                     elif self.turns[0]:#차선책 -> 타겟이랑 멀어지지만 오른쪽 갈 수 있으면
-                        self.direction = 0
+                        self.direction = 0 #오른쪽 가자
                         self.x_pos += self.speed
                 elif self.turns[1]:#왼쪽으로 가는 거 가능
-                    if self.target[1] > self.y_pos and self.turns[3]: #
-                        self.direction = 3
+                    if self.target[1] > self.y_pos and self.turns[3]: #목표 y좌표 밑 + 밑 가능
+                        self.direction = 3 #밑으로 가자
                         self.y_pos += self.speed
-                    if self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
+                    if self.target[1] < self.y_pos and self.turns[2]: #목표 y좌표 위 + 위 가능
+                        self.direction = 2 #위로 가자
                         self.y_pos -= self.speed
                     else:
                         self.x_pos -= self.speed
             elif self.direction == 2:# 위로 가려고 함
-                if self.target[0] < self.x_pos and self.turns[1]: # 왼쪽이 가능?
+                if self.target[0] < self.x_pos and self.turns[1]: # 목표 x좌표 왼쪽 + 왼쪽이 가능
                     self.direction = 1 # 왼쪽으로
                     self.x_pos -= self.speed
-                elif self.target[1] < self.y_pos and self.turns[2]:
-                    self.direction = 2
+                elif self.target[1] < self.y_pos and self.turns[2]: #목표 y좌표 위 + 위 가능
+                    self.direction = 2 #위로
                     self.y_pos -= self.speed
-                elif not self.turns[2]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
+                elif not self.turns[2]: # 위으로 못 감 -> 다른 길 찾아야 함
+                    if self.target[0] > self.x_pos and self.turns[0]: #목표 x좌표 오른쪽 + 오른쪽 가능
+                        self.direction = 0 # 오른쪽 가자
                         self.x_pos += self.speed
-                    elif self.target[0] < self.x_pos and self.turns[1]:
-                        self.direction = 1
+                    elif self.target[0] < self.x_pos and self.turns[1]: #목표 왼쪽 + 왼쪽 가능
+                        self.direction = 1 # 왼쪽 가자
                         self.x_pos -= self.speed
-                    elif self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
+                    elif self.target[1] > self.y_pos and self.turns[3]: # 목표 아래 + 아래 가능
+                        self.direction = 3 #아래 가자
                         self.y_pos += self.speed
-                    elif self.turns[1]:
-                        self.direction = 1
+                    # 목표랑 멀어지지만 방법 없음 -> 목표랑 멀어져도 가자
+                    elif self.turns[1]: #왼쪽 가능
+                        self.direction = 1 #왼쪽 가자
                         self.x_pos -= self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
+                    elif self.turns[3]: #아래 가능
+                        self.direction = 3 #아래 가자
                         self.y_pos += self.speed
-                    elif self.turns[0]:
-                        self.direction = 0
+                    elif self.turns[0]: #오른쪽 가능
+                        self.direction = 0 #오른쪽 가자
                         self.x_pos += self.speed
-                elif self.turns[2]:
-                    if self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
+                elif self.turns[2]: #위 가능 + 목표 y좌표 위가 아님
+                    if self.target[0] > self.x_pos and self.turns[0]: #목표 x좌표 오른쪽 + 오른쪽 가능
+                        self.direction = 0 #오른쪽 가자
                         self.x_pos += self.speed
                     elif self.target[0] < self.x_pos and self.turns[1]:
                         self.direction = 1
@@ -1066,7 +1067,7 @@ def pacman():
 
 
         # player_circle = pygame.draw.circle(screen, 'purple', (center_x, center_y), 20, 2) #플레이어 히트박스 제대로 됐는지 확인하는 코드
-        player_circle = pygame.draw.circle(screen, 'black', (center_x, center_y), 20, 2) # 플레이어 히트박스
+        player_circle = pygame.draw.circle(screen, 'black', (center_x, center_y), 10, 2) # 플레이어 히트박스
         draw_player()
         blinky = Ghost(blinky_x, blinky_y, targets[0], ghost_speeds[0], blinky_img, blinky_direction, blinky_dead,
                        blinky_box, 0)
@@ -1457,8 +1458,8 @@ def pacman():
                 direction = i
 
         if player_x > 900+350: # 화면 너비 오른쪽으로 넘으면
-            player_x = -47+350
-        elif player_x < -50+350: # 왼쪽으로 너무 가서 완전히 사라지는
+            player_x = -40+350
+        elif player_x < -40+350: # 왼쪽으로 너무 가서 완전히 사라지는
             player_x = 897+350
 
         if blinky.in_box and blinky_dead: # 유령 상자에 있고 죽었으면
