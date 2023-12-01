@@ -10,10 +10,17 @@ def pacman():
     import resources.images.characters
     from option import maze_index
     from option import sound # sound 설정에서 받고 들리게 설정했으면(1) -> 소리 들리게 if문 처리...
-    import ctypes
+    import platform
+    os_name = platform.system()
 
-    u32 = ctypes.windll.user32
-    resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+    if os_name == 'Windows':
+        import ctypes
+
+        u32 = ctypes.windll.user32
+        resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+    else:
+        resolution = [1600, 1000]
+
     save_file = resources.save_files.save_file()
     save_file.load()
     if maze_index == 0:

@@ -5,10 +5,16 @@ import resources.save_files
 import mainmenu
 from mainmenu import easter
 from mainmenu import easter_now
-import ctypes
+import platform
+os_name = platform.system()
 
-u32 = ctypes.windll.user32
-resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+if os_name == 'Windows':
+    import ctypes
+
+    u32 = ctypes.windll.user32
+    resolution = u32.GetSystemMetrics(0), u32.GetSystemMetrics(1)
+else:
+    resolution = [1600, 1000]
 
 def round3(sound):
     pygame.init()
