@@ -37,7 +37,6 @@ def pacman():
     WIDTH = 900
     HEIGHT = 900  # 창 가로세로 상수로 정해두고 시작 ->이거 해상도마다 다르게 보일 수 있음
     screen = pygame.display.set_mode(resolution,pygame.FULLSCREEN)  # 창 가로세로 정하기
-    #screen = pygame.display.set_mode([WIDTH,HEIGHT], pygame.FULLSCREEN)  # 창 가로세로 정하기
     timer = pygame.time.Clock()  # 속도 제어 위해서
     fps = 60 #게임 플레이할 수 있는 최대속도
     font = pygame.font.Font('assets/pacman_main_menu_images/emulogic.ttf', 20) #글씨 폰트, 크기 freesansbold
@@ -1080,7 +1079,7 @@ def pacman():
 
         if game_over:  # 졌을 경우
             flicker_gameover_won+=1
-            if game_won == False:
+            if game_won == False: # 유령과 닿음 + 코인 전부 먹는 거 동시에 했을 시 -> win gameover 텍스트 동시에 안 뜨게
                 screen.blit(game_over_img, (WIDTH // 2 - 250+350, 350))
                 if flicker_gameover_won % 60 >= 5:
                     press_enter_to_restart_text = font.render(f'press [SPACE] to restart', True,
@@ -1094,7 +1093,7 @@ def pacman():
                 win_sound.play(0)
                 game_won_sound = True
             game_over = False  # GAME OVER
-            moving = False
+            moving = False #이겼을 때 이동 못하게
             trophy = pygame.transform.scale(pygame.image.load(f'assets/game_over/gold_trophy.png'), (200, 200))
             win = pygame.transform.scale(pygame.image.load(f'assets/game_over/win.png'), (623, 102))
             screen.blit(trophy, (WIDTH // 2 - 350+350, 300))
