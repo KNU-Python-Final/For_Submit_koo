@@ -1,4 +1,5 @@
 # 9조-패션왕 김팽맨
+
 ## 🖥️ 게임 실행 방법
 -----
 mainmenu.py 파일을 실행하면 게임이 시작됩니다.
@@ -38,6 +39,7 @@ mainmenu.py 파일을 실행하면 게임이 시작됩니다.
 test.py 파일을 이용하여 각각 라운드별로 실행할 수 있습니다.
 
 test.py 파일 내 import는 주석 처리를 하지 않습니다.
+
     import pacman_2
     import round3
     import round2_1
@@ -49,6 +51,7 @@ test.py 파일 내 import는 주석 처리를 하지 않습니다.
 실행을 원하는 라운드의 주석을 해제한 후 게임을 실행하면 해당 라운드만 실행할 수 있습니다.
 
 ex) 1라운드 실행 시
+
     import pacman_2
     import round3
     import round2_1
