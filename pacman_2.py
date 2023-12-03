@@ -24,6 +24,8 @@ def pacman():
 
     save_file = resources.save_files.save_file()
     save_file.load()
+
+    #옵션에서 받은 미로색으로 색 결정
     if maze_index == 0:
         color = 'green'
     elif maze_index == 1:
@@ -41,11 +43,10 @@ def pacman():
     fps = 60 #게임 플레이할 수 있는 최대속도
     font = pygame.font.Font('assets/pacman_main_menu_images/emulogic.ttf', 20) #글씨 폰트, 크기 freesansbold
     level = copy.deepcopy(boards) #미로 리스트 = level에 넣기
-    #color = 'green'#벽 색깔 걍 변수로 미리 해둠(0,255,0)(46,135,255)(251,171,197)(255,222,10)
+
     PI = math.pi #pi 상수
     player_images = [] #빈리스트 미리 만들기
-    # for i in range(1, 5):
-        # player_images.append(pygame.transform.scale(pygame.image.load(f'assets/player_images/{i}.png'), (45, 45))) #이미지 1~4를 가져와서 크기는 바꾸는거임 ->45,45로  -> 그리고 리스트에 추가
+
     for image_path in resources.images.characters.get_images_path(save_file.image_file):
         player_images.append(pygame.transform.scale(pygame.image.load(image_path), (50, 50)))
     # 사운드 가져오기
@@ -1021,8 +1022,6 @@ def pacman():
         if startup_counter < 180 and not game_over and not game_won and not pause: # 게임 시작하기 전에 3초 시간 주고 시작, 게임 안끝났고 안 이겼으면
             flicker = False
             moving = False # moving 불가
-            ready_text = font.render(f'GET READY', True, 'white')  # antialias : True -> 선 부드럽게..
-            screen.blit(ready_text, (360+350, 500))
             startup_counter += 1
             pygame.display.flip()
         elif startup_counter >= 180 and not game_over and not game_won: # 3초 지나고 게임 끝난 상태 아니면
@@ -1031,6 +1030,11 @@ def pacman():
 
         screen.fill('black') # 스크린 색
         draw_board() # draw_board()함수 호출로 미로 그리기
+
+        if startup_counter < 180 and not game_over and not game_won and not pause and startup_counter%60>=10:  # get ready 게임 시작 전에 깜빡이게 하기
+            ready_text = font.render(f'GET READY', True, 'white')  # antialias : True -> 선 부드럽게..
+            screen.blit(ready_text, (360 + 350, 500))
+
         # 플레이어의 중심점을 주려고 중심점 만든거임. 한칸이 (45,45라서) -> 이게 정확한 반의 수치는 아닌데 좀 더 자연스럽게 딱 중간이라...
         center_x = player_x + 23
         center_y = player_y + 24
@@ -1108,6 +1112,8 @@ def pacman():
         if powerup: # 파워업 먹었으면
             pygame.draw.circle(screen, 'blue', (162, 46), 10)
         draw_misc()
+
+
 
         # pause 화면
         if pause:
@@ -1471,6 +1477,7 @@ def pacman():
             pinky_dead = False
         if clyde.in_box and clyde_dead:
             clyde_dead = False
+
 
         save_file.save()
         pygame.display.flip() # 화면 전체 업데이트
