@@ -59,3 +59,25 @@ ex) 1라운드 실행 시
     pacman_2.pacman() # 1라운드
     #round2_1.round2(1) # 2라운드 -> () 안에 소리 듣고 싶으면 1, 안 듣고싶으면 0 넣기
     #round3.round3(1) # 3라운드 -> () 안에 소리 듣고 싶으면 1, 안 듣고싶으면 0 넣기.
+
+만약 3라운드(상점)를 테스트하고 싶은데 구매하기에는 코인이 부족하다면 save_file.json 의"score"값을 원하는 코인값만큼 수정해주세요!
+
+save_file.json 예시)
+
+
+    {
+      "score": 0,  # 0 -> 100000 으로 변경 후 실행 시 10만 코인 가진 상태로 나옴.
+      "image_file": "default", # 현재 착용하고 있는 의상 의미 -> "king"으로 바꾸고 밑의 "king" : true 로 바꾸면 king 의상 구매 & 착용한 상태로 변경
+      "inventory": {
+        "default": true,
+        "king": false,
+        "heart_king": false,
+        "leaf": false,
+        "heart_leaf": false,
+        "angel": false,
+        "heart_angel": false,
+        "santa": false,
+        "heart_santa": false
+      }
+    }
+
