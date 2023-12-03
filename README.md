@@ -64,6 +64,7 @@ ex) 1라운드 실행 시
 
 save_file.json 예시)
 
+
 {
   "score": 0,  # 0 -> 100000 으로 변경 후 실행 시 10만 코인 가진 상태로 나옴.
   "image_file": "default", # 현재 착용하고 있는 의상 의미 -> "king"으로 바꾸고 밑의 "king" : true 로 바꾸면 king 의상 구매 & 착용한 상태로 변경
@@ -79,3 +80,4 @@ save_file.json 예시)
     "heart_santa": false
   }
 }
+
