@@ -1079,6 +1079,8 @@ def pacman():
 
         if game_over:  # 졌을 경우
             flicker_gameover_won+=1
+            bgm.stop()
+            powerup_sound.stop()
             if game_won == False: # 유령과 닿음 + 코인 전부 먹는 거 동시에 했을 시 -> win gameover 텍스트 동시에 안 뜨게
                 screen.blit(game_over_img, (WIDTH // 2 - 250+350, 350))
                 if flicker_gameover_won % 60 >= 5:

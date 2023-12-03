@@ -345,6 +345,7 @@ def round2(sound):
         else:
             round3.round3(sound)
             pygame.display.flip()
+        save_file.save()  # 게임 종료 시 점수 저장
         bg_music.stop()
     pygame.quit()
 #round2(0)
